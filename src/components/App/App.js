@@ -8,6 +8,9 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import Books from '../Books/books'
+import Book from '../Books/book'
+import CreateBook from '../Books/create-book'
 
 class App extends Component {
   constructor () {
@@ -23,7 +26,12 @@ class App extends Component {
 
   clearUser = () => this.setState({ user: null })
 
+  // this is a function to set a state.
+  // setting the state rerenders...
   alert = ({ heading, message, variant }) => {
+    // variant is a bootstrap variant. Green for success, red for failure, etc.
+    // when it receives these three properties, it sets the state by
+    // the "..." spread operator creates a copy, placs it inside of out new array that was defined with the square brackets, and appends our new message onto the end
     this.setState({ alerts: [...this.state.alerts, { heading, message, variant }] })
   }
 
@@ -53,6 +61,15 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/books' render={() => (
+            <Books alert={this.alert}/>
+          )} />
+          <AuthenticatedRoute user={user} exact path='/create-book' render={() => (
+            <CreateBook alert={this.alert} user={user}/>
+          )} />
+          <AuthenticatedRoute user={user} path='/books/:id' render={() => (
+            <Book alert={this.alert} user={user}/>
           )} />
         </main>
       </Fragment>
